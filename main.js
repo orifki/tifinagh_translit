@@ -38,41 +38,41 @@ const tifinaghToLatin = {
 };
 
 const tifinaghToArabic = {
-	'ⴰ': 'ا',
+	'ⴰ': 'ا', //
 	'ⴱ': 'ب',
-	'ⴳ': 'ج',
+	'ⴳ': 'ݣ',
 	'ⴷ': 'د',
-	'ⴻ': 'e',
+	'ⴻ': 'ه', //
 	'ⴼ': 'ف',
 	'ⴽ': 'ك',
 	'ⵀ': 'ه',
-	'ⵄ': 'ɛ',
+	'ⵄ': 'ع',
 	'ⵎ': 'م',
-	'ⵜ': 't',
-	'ⵞ': 'č',
+	'ⵜ': 'ت',
+	'ⵞ': 'چ', //تش, ڜ
 	'ⵟ': 'ط',
 	'ⵙ': 'س',
 	'ⵣ': 'ز',
-	'ⵕ': 'ṛ',
-	'ⴹ': 'ḍ',
+	'ⵕ': 'ڕ', //ڑ
+	'ⴹ': 'ض',
 	'ⵏ': 'ن',
 	'ⵍ': 'ل',
 	'ⵔ': 'ر',
 	'ⵚ': 'ص',
-	'ⵛ': '',
+	'ⵛ': 'ش',
 	'ⵊ': 'ج',
-	'ⵅ': 'x',
+	'ⵅ': 'خ',
 	'ⵃ': 'ح',
 	'ⵡ': 'و',
-	'ⵖ': 'ɣ',
+	'ⵖ': 'غ',
 	'ⵯ': 'ʷ',
-	'ⵥ': 'ẓ',
-	'ⵇ': 'q',
+	'ⵥ': 'ژ', //ڞ
+	'ⵇ': 'ق',
 	'ⵢ': 'ي',
-	'ⵉ': 'إ',
-	'ⵓ': 'u',
-	'ⵒ': 'p',
-	'ⵠ': 'v'
+	'ⵉ': 'إ', //
+	'ⵓ': 'و', //
+	'ⵒ': 'پ',
+	'ⵠ': 'ڥ' // ڤ, ۋ
 };
 
 
@@ -93,41 +93,48 @@ let outputText = document.getElementById('test');
 // }
 //inputText.style.height = (inputText.scrollHeight + 2) + "px";
 
-let isFurigana = 0
+let isFurigana = 1
+let isLatin = 1
 let output = "<ruby>";
-if (isFurigana == 0) {
-	output += "<rbc>"
-}
+if (isFurigana == 0) output += "<rbc>"
 
 let tifinagh_word = "";
 let latin_word = "";
+let is_empty = 1
 for (let i in input) {
+	if (input[i] == ' ' || input[i] == '.' || input[i] == ',' || input[i] == ':') {
+		output += tifinagh_word
 
-	if (input[i] == ' ' || input[i] == '.' || input[i] == ':') {
-		output += tifinagh_word + "<rp>(</rp><rt>"
-		if (isFurigana == 0 && latin_word != ' ') {
-			output += "&nbsp;(" + latin_word + ")&nbsp;"
-		} else {
-			output += latin_word
+		//add transliteration
+		if (is_empty != 1) {
+			output += "<rp>(</rp><rt>"
+			if (isFurigana == 0)
+				output += "&nbsp;(" + latin_word + ")"
+			else
+				output += latin_word
+			output += "</rt><rp>)</rp>";
+			if (isFurigana == 0) output += "</rbc><rbc>"
 		}
-		output += "</rt><rp>)</rp>";
-		if (isFurigana == 0) {
-			output += "</rbc><rbc>"
-		}
-		output += input[i]
+
+		//add ponctuation 
+		if (input[i] == ' ') output += "&nbsp;"
+		//else if (input[i] == '\n') output += "</br>"
+		else output += input[i]
+
+		//init variables
 		tifinagh_word = "";
 		latin_word = "";
+		is_empty = 1
 	} else {
 		tifinagh_word += input[i]
-		if (input[i] != ',') {
-			latin_word += tifinaghToLatin[input[i]] ?? "&nbsp;&nbsp;";
-		}
+		//latin_word += tifinaghToLatin[input[i]]
+		latin_word += tifinaghToArabic[input[i]]
+		//	latin_word += tifinaghToLatin[input[i]] ?? "&nbsp;";
+		if (input[i] >= 'ⴰ' && input[i] <= 'ⵠ') is_empty = 0
 	}
 
 }
-if (isFurigana == 0) {
-	output += "</rbc>"
-}
+if (isFurigana == 0) output += "</rbc>"
 output += "</ruby>";
 //outputText.style.fontSize = "25px"
 outputText.style.fontSize = "x-large";
