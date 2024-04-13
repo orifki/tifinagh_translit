@@ -5,44 +5,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Translate from latin script to tifinagh or the inverse, tifinagh latin converter">
-    <title>Tifinagh Latin Converter</title>
-
-    <style>
-        #inputText {
-            height: 5px;
-        }
-        footer{
-            margin-top: 200px;
-            margin-bottom: 20px;
-        }
-    </style>
-
-    <link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css">
+    <meta name="description" content="Tifinagh Transliteration to Latin and Arabic scripts">
+    <title>Tifinagh Transliteration</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-    
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 m-auto mt-5">
-                <h1 class="text-center">Tifinagh Latin Transliteration</h1>
-                <p class="text-center">You can Transliterate from latin script to tifinagh script and vice versa.</p>
-                <div class="form-group mt-5 d-flex">
-                    <textarea id="inputText" class="form-control"></textarea>
-                </div>
-                <div id="outputText" class="mt-4 form-group p-2"></div>
-            </div>
-        </div>  
-        
-        
+    <h1> Tifinagh Transliteration </h1>
+    <p>
+        You can Transliterate a
+        <a href="https://en.wikipedia.org/wiki/Tifinagh"> ⵜiⴼinaⵖ </a> text to
+        <a href="https://en.wikipedia.org/wiki/Latin_script">Latin</a> and
+        <a href="https://en.wikipedia.org/wiki/Arabic_script">Arabic</a> scripts
+        </br>
+        in the <a href="https://en.wikipedia.org/wiki/Furigana"> Furigana </a> /
+        <a href="https://en.wikipedia.org/wiki/Okurigana"> Okurigana</a>
+        style of Japanese language.
+    </p>
+
+    <div class="center-div">
+        <form>
+            <input type="radio" id="furi_button" name="furi_okuri" value="1" checked="checked">
+            <label for="furi_button">Furigana</label>
+
+            <input type="radio" id="okuri_button" name="furi_okuri" value="0">
+            <label for="okuri_button">Okurigana</label>
+
+            &emsp;&emsp;&emsp;
+
+            <input type="radio" id="latin_button" name="latin_ara" value="1" checked="checked">
+            <label for="latin_button">Latin</label>
+
+            <input type="radio" id="arabic_button" name="latin_ara" value="0">
+            <label for="arabic_button">Arabic</label>
+        </form>
     </div>
 
-    <footer class="text-center">
-        Made By <a class="text-dark" href="https://github.com/...">orifki</a> 
+    <div class="center-div">
+        <textarea id="inputText" placeholder="Type/Copy your text"></textarea>
+    </div>
+    <div class="center-div">
+        <div id="outputText"></div>
+    </div>
+
+
+    <!-- <div style="font-size: 20px;">
+        <b>Tifinagh main character:</b> </br>
+        ⴰ=a=أ, ⴱ=b=ب, ⴳ=g=ݣ, ⴷ=d=د, ⴹ=ḍ=ض, ⴻ=e=, ⴼ=f=ف, ⴽ=k=ك, </br>
+        ⵀ=h=ه, ⵃ=ḥ=ح, ⵄ=ɛ=ع, ⵅ=kh=خ, ⵇ=q=ق, ⵉ=i=ي, ⵊ=j=ج, ⵍ=l=ل, </br>
+        ⵎ=m=م, ⵏ=n=ن, ⵓ=u=و, ⵔ=r=ر, ⵕ=ṛ=ڕ, ⵖ=ɣ=غ, ⵙ=s=س, ⵚ=ṣ=ص, </br>
+        ⵛ=sh=ش, ⵜ=t=ت, ⵟ=ṭ=ط, ⵡ=w=و, ⵢ=y=ي, ⵣ=z=ز, ⵥ=ẓ=ژ.
+    </div>
+    </br>
+    <div style="font-size: 20px;">
+        <b>Other character:</b> </br>
+        ⴲ=bh=., ⴴ=gh=., ⴵ=dj=., ⴶ=dj=., ⴸ=d=., ⴺ=ḍh=., ⴿ=kh=., ⵁ=h=., </br>
+        ⵒ=p=پ, ⵝ=th=., ⵞ=č=چ, ⵠ=v=ڥ
+    </div> -->
+
+    <footer>
+        Made by <a href="https://github.com/orifki/tifinagh_translit">orifki</a>
     </footer>
 
     <script src="main.js"></script>
 </body>
-</html>
 
+</html>
