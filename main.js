@@ -1,3 +1,10 @@
+/** 
+ * @description: Tranliteration of Tifinagh text to Latin / Arabic scripts.
+ * @version: 1.0 (April 2024)
+ * @author: Omar Rifki
+ **/
+
+
 
 //Equivalence tables ⵣ -> Latin / ع letters
 const ⵣToL = {
@@ -18,24 +25,52 @@ const ⵣToع = {
 	'ⵟ': 'ط', 'ⵙ': 'س', 'ⵣ': 'ز', 'ⴹ': 'ض', 'ⵏ': 'ن', 'ⵍ': 'ل', 'ⵔ': 'ر', 'ⵚ': 'ص',
 	'ⵛ': 'ش', 'ⵊ': 'ج', 'ⵅ': 'خ', 'ⵃ': 'ح', 'ⵡ': 'و', 'ⵖ': 'غ', 'ⵇ': 'ق', 'ⵢ': 'ي',
 	'ⵒ': 'پ',
-	'ⴳ': 'ݣ', //other forms: ڨ ,گ
+	'ⴳ': 'ڭ', //other forms: ڨ ,گ
 	'ⵞ': 'چ', //other forms: تش ,ڜ
 	'ⵕ': 'ڕ', //other forms: ڑ
 	'ⵥ': 'ژ', //other forms: ڞ
 	'ⵠ': 'ڥ' //other forms: ڤ ,ۋ 
 };
 
+
+
 //link with the HTML page
 let inputText = document.getElementById('inputText');
 let outputText = document.getElementById('outputText');
-let isFurigana = document.getElementsByName('furi_okuri').value;
-let isLatin = document.getElementsByName('latin_ara').value;
+let isFurigana = document.querySelector('input[name="furi_okuri"]:checked').value;
+//=1 Furigana style, otherwise Okurigana style
+let isLatin = document.querySelector('input[name="latin_ara"]:checked').value;
+//=1 to Latin alphabets, otherwise to Arabic abjad
 inputText.addEventListener('input', addTranslit);
+
+function listen_button() {
+	isFurigana = document.querySelector('input[name="furi_okuri"]:checked').value;
+	isLatin = document.querySelector('input[name="latin_ara"]:checked').value;
+	input = inputText.value.toLowerCase();
+	if (input.length != 0)
+		addTranslit()
+}
+
+document.getElementById('small_font').onclick = function () {
+	outputText.style.fontSize = "15px";
+	addTranslit()
+}
+
+document.getElementById('medium_font').onclick = function () {
+	outputText.style.fontSize = "25px";
+	addTranslit()
+}
+
+document.getElementById('large_font').onclick = function () {
+	outputText.style.fontSize = "35px";
+	addTranslit()
+}
+
 
 //for debugging 
 //let input = "ⴹⴹⴰⵕⵍⴱⵉⴹⴰ - ⵉⵙⴽⵔ ⵍⴰⵎⵉⵔ ⵏ ⵉⵎⵓⵎⵏⵏ, ⴱⴰⴱ ⵏ ⵡⴰⴷⴷⵓⵔ ⴰⴳⵍⵍⵉⴷ ⵎⵓⵃⵎⵎⴷ ⵡⵉⵙⵙ ⵚⴹⵉⵚ, ⴰⴷ ⵜ ⵉⵏⵚⵕ ⵕⴱⴱⵉ, ⵉⵎⴰⵏⵏ ⴷ ⴱⴰⴱ ⵏ ⵜⴰⵜⵜⵓⵢⵜ ⵜⴰⴳⵍⴷⴰⵏⵜ ⴰⵎⴽⴽⵓⵙⵓ ⵏ ⵜⴳⵍⴷⵉⵜ ⴰⴳⵍⴷⵓⵏ ⵎⵓⵍⴰⵢ ⵍⵃⴰⵙⴰⵏ, ⴷ ⴱⴰⴱ ⵏ ⵜⴰⵜⵜⵓⵢⵜ ⵜⴰⴳⵍⴷⴰⵏⵜ ⴰⴳⵍⴷⵓⵏ ⵎⵓⵍⴰⵢ ⵕⵛⵉⴷ, ⴷ ⴱⴰⴱ ⵏ ⵜⴰⵜⵜⵓⵢⵜ ⴰⴳⵍⴷⵓⵏ ⵎⵓⵍⴰⵢ ⵃⵎⴷ, ⴷ ⴱⴰⴱ ⵏ ⵜⴰⵜⵜⵓⵢⵜ ⴰⴳⵍⴷⵓⵏ ⵎⵓⵍⴰⵢ ⵙⵎⴰⵄⵉⵍ, ⴰⵙⵙ ⵏ ⵓⴽⵔⴰⵙ, ⵜⴰⵥⴰⵍⵍⵉⵜ ⵏ ⵄⵉⴷ ⵍⴼⵉⵟⵕ ⴷ ⵉⵙⵏⵓⴱⴳ ⵉⵙⵔⵖⵓⴷⵏ."
 //let outputText = document.getElementById('test');
-//let isFurigana = 1 //=1 Furigana style, otherwise Okurigana style
+//let isFurigana = 1
 //let isLatin = 0
 
 function translitع(input, word, count) {
@@ -62,15 +97,12 @@ function translitع(input, word, count) {
 
 function addTranslit() {
 	input = inputText.value.toLowerCase();
-	if (input.length === 0) {
+	if (input.length == 0) {
 		outputText.innerHTML = '';
 		return;
 	}
 
-	//inputText.style.height = (inputText.scrollHeight + 2) + "px";
 	let output = "<ruby>";
-	if (isFurigana == 0) output += "<rbc>"
-
 	let tifinagh_word = "";
 	let translit_word = "";
 	let is_empty = 1
@@ -79,21 +111,21 @@ function addTranslit() {
 		if (input[i] == ' ' || input[i] == '.' || input[i] == ',' || input[i] == ':') {
 			output += tifinagh_word
 
-			//add transliteration
+
 			if (is_empty != 1) {
+				//add transliteration
 				output += "<rp>(</rp><rt>"
 				if (isFurigana == 0)
-					output += "&nbsp;(" + translit_word + ")"
+					output += "<rtc>&nbsp;(" + translit_word + ")</rtc>"
 				else
 					output += translit_word
 				output += "</rt><rp>)</rp>";
-				if (isFurigana == 0) output += "</rbc><rbc>"
-			}
 
-			//add ponctuation 
-			if (input[i] == ' ') output += "&nbsp;"
-			else if (input[i] == '\n') output += "</br>"
-			else output += input[i]
+				//add ponctuation 
+				if (input[i] == ' ') output += "&nbsp;"
+				else if (input[i] == '\n') output += "</br>"
+				else output += input[i]
+			}
 
 			//init variables
 			tifinagh_word = "";
@@ -102,7 +134,7 @@ function addTranslit() {
 			count_letter = 1
 		} else {
 			tifinagh_word += input[i]
-			if (isLatin)
+			if (isLatin == 1)
 				translit_word += ⵣToL[input[i]]
 			else
 				translit_word += translitع(input[i], translit_word, count_letter)
@@ -111,7 +143,6 @@ function addTranslit() {
 		}
 
 	}
-	if (isFurigana == 0) output += "</rbc>"
 	output += "</ruby>";
 	//outputText.style.fontSize = "25px"
 	//outputText.style.fontSize = "x-large";

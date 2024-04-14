@@ -24,10 +24,18 @@ footer {
 .center-div {
     margin-left: auto;
     margin-right: auto;
-    width: 70%;
+    width: 60%;
     background-color: lightgray;
-    padding: 20px;
+    padding: 10px;
     display: flex;
+    word-break: break-all;
+}
+
+.right-div {
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
 }
 
 #inputText {
