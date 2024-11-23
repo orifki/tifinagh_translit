@@ -1,13 +1,12 @@
 # Tifinagh-translit
 
-A js script adding Latin and Arabic transliteration to a Tifinagh text 
-in the Furigana / Okurigana way of the Japanese language. 
-The goal is to make reading Tifinagh easy. 
+A js script for Latin and Arabic transliteration of a Tifinagh text 
+in the Furigana / Okurigana way of Japanese language. 
+The idea is to make reading Tifinagh easier. 
 
-The demo website is: [To insert later]
+Demo website is: [tifinagh.net](https://www.tifinagh.net/)
 
 ## TODO
- - [ ] Handle punctuation across scripts. 
- - [ ] Validate the Arabic script equivalence with Tifinagh.
- - [ ] Do more tests.
-
+ * [ ] Handle punctuation across scripts. 
+ * [ ] Validate the Arabic script equivalence with Tifinagh.
+ * [ ] Do more tests.
